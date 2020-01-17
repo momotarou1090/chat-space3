@@ -1,0 +1,22 @@
+.main-chat__group-info
+  .main-chat__group-info__left
+    %p.main-chat__group-info__left__name
+      野菜
+    %p.main-chat__group-info__members
+      - @members.each do |member|
+        = member.name
+  .main-chat__group-info__edit
+    = link_to 'Edit', 'edit', class: "main-chat__group-info__edit__btn" 
+.main-chat__message-list
+  = render @messages
+
+.main-chat__message-form
+  = form_for [@group, @message] do |f|
+    .input-box 
+      = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'
+      = f.label :image, class: 'input-box__image' do
+        = icon('far', 'image', class: 'icon')
+        = f.file_field :image, class: 'input-box__image__file'
+    = f.submit 'Send', class: 'form__submit'
+
+
