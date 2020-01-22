@@ -1,7 +1,7 @@
 lock '3.11.2'
 
 # Capistranoのログの表示に利用する
-set :application, 'chat-space3'
+set :application, 'chat-space'
 
 # どのリポジトリからアプリをpullするかを指定する
 set :repo_url,  'git@github.com:momotarou1090/chat-space3.git'
