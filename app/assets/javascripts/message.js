@@ -8,7 +8,7 @@ $(function(){
              ${message.user_name}
            </div>
            <div class="main-chat__message-list__message__top__date">
-             ${message.created_at.strftime("%Y年%m月%d日 %H時%M分")}
+             ${message.created_at}
            </div>
          </div>
          <div class="main-chat__message-list__message__bottom">
@@ -59,7 +59,33 @@ $('#new_message').on('submit', function(e){
     $('.form__submit').prop('disabled', false);
   })
   .fail(function() {
-    alert("メッセージ送信に失敗しました");
+    alert('error');
+  });
 });
-})
+
+  var reloadMessages = function() {
+    last_message_id = $('.main-chat__message-list__message:last').data("message-id");
+    $.ajax({
+      url: "api/messages",
+      type: 'get',
+      dataType: 'json',
+      data: {id: last_message_id}
+    })
+    .done(function(messages) {
+    if (messages.length !== 0) {
+      var insertHTML = '';
+      $.each(messages, function(i, message) {
+        insertHTML += buildHTML(message)
+      });
+      $('.main-chat__message-list').append(insertHTML); 
+      $('.main-chat__message-list').animate({ scrollTop: $('.main-chat__message-list')[0].scrollHeight });
+      }
+    })
+    .fail(function() {
+      alert('error');
+    });
+  };
+    if (document.location.href.match(/\/groups\/\d+\/messages/)) {
+      setInterval(reloadMessages, 7000);
+    }
 });
