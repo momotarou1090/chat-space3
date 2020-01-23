@@ -1,7 +1,7 @@
 .main-chat__group-info
   .main-chat__group-info__left
     %p.main-chat__group-info__left__name
-      野菜
+      = @group.name
     %p.main-chat__group-info__members
       - @members.each do |member|
         = member.name
